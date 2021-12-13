@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.theone.dynamicwallpaper">
+
+    <application
+        android:name=".app.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".ui.activity.LauncherActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:theme="@style/StartAppTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <activity
+            android:name=".ui.activity.ShortVideoParseActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTask"
+            android:theme="@style/ShareTheme">
+
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.SEND" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.activity.ErrorActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/ShareTheme" />
+
+        <!-- 配置实时壁纸Service -->
+        <service
+            android:name=".service.WallpaperService1"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <!-- 为实时壁纸配置intent-filter -->
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <!-- 为实时壁纸配置meta-data -->
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/livewallpaper" />
+        </service>
+        <!-- 配置实时壁纸Service -->
+        <service
+            android:name=".service.WallpaperService2"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_WALLPAPER">
+
+            <!-- 为实时壁纸配置intent-filter -->
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <!-- 为实时壁纸配置meta-data -->
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/livewallpaper" />
+        </service>
+
+    </application>
+
+</manifest>

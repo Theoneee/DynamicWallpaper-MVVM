@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">动态壁纸</string>
+
+    <string name="crash_title">很抱歉，程序崩溃了</string>
+    <string name="show_error_msg">查看错误信息</string>
+</resources>

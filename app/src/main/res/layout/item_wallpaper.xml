@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.theone.dynamicwallpaper.data.bean.Wallpaper" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView2
+            android:id="@+id/iv_cover"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:imageUrl="@{item.thumbPath}"
+            app:qmui_corner_radius="4dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/iv_cover"
+            android:text="@{item.getDuration()}"
+            android:layout_margin="6dp"
+            android:gravity="end"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/iv_cover"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

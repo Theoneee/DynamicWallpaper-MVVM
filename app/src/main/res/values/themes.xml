@@ -1,0 +1,52 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="CoreTheme">
+        <item name="qmui_topbar_height">60dp</item>
+        <item name="qmui_dialog_radius">7dp</item>
+        <item name="qmui_skin_support_topbar_separator_height">0px</item>
+        <item name="qmui_dialog_title_style">@style/DialogTheme2TitleStyle</item>
+        <item name="qmui_dialog_action_style">@style/DialogTheme2ActionStyle</item>
+    </style>
+
+    <style name="ShareTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="dialog_wrapper_style_63">
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:paddingRight">30dp</item>
+    </style>
+
+    <style name="DialogTheme2TitleStyle" parent="QMUI.Dialog.Title">
+        <item name="android:textColor">@color/qmui_config_color_gray_1</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="DialogTheme2ActionContainerStyle">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="qmui_dialog_action_container_justify_content">stretch</item>
+        <item name="qmui_dialog_action_height">56dp</item>
+        <item name="qmui_dialog_action_space">8dp</item>
+        <item name="qmui_topDividerHeight">1px</item>
+    </style>
+
+    <style name="DialogTheme2ActionStyle" parent="QMUI.Dialog.Action">
+        <item name="android:textColor">@color/qmui_config_color_gray_2</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="crash_btn_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+</resources>
