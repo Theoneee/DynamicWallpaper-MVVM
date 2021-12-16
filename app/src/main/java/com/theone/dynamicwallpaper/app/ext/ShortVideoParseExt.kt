@@ -98,8 +98,8 @@ private fun Context.showParseDialog(
         dialog.dismiss()
         if (index > 0) {
             onParse?.invoke(url)
-            "".setPrimaryClip(this)
         }
+        "".setPrimaryClip(this)
         mTipsDialog = null
     }).apply {
         setCanceledOnTouchOutside(false)
