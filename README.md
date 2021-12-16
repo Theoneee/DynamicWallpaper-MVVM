@@ -21,4 +21,13 @@
 
 [Android 仿火萤视频桌面 神奇的LiveWallPaper](https://blog.csdn.net/lmj623565791/article/details/72170299)
  
-[java实现抖音、快手短视频解析去除水印下载无水印视频](https://www.it610.com/article/1293444797025034240.htm)
+[演示视频](http://file.cudag.com/2021/12/13/7a7690544081e61880e4dae8137bf1e0.mp4)
+ 
+
+ 
+ 
+ 
+ 
+
+
+
