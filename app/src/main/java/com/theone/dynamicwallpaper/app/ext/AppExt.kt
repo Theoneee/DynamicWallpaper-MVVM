@@ -5,6 +5,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.theone.dynamicwallpaper.app.util.WallpaperUtil
 import com.theone.dynamicwallpaper.data.constatnt.WallpaperConstant
 import com.theone.mvvm.ext.qmui.showFailTipsDialog
@@ -59,5 +60,18 @@ fun Context.joinQQGroup(key: String) {
     } catch (e: Exception) {
         // 未安装手Q或安装的版本不支持
         showFailTipsDialog("未安装手机QQ或安装的版本不支持")
+    }
+}
+
+//设置适配器的列表动画
+fun BaseQuickAdapter<*, *>.setAdapterAnimation(mode: Int = 2) {
+    mode.let {
+        //等于0，关闭列表动画 否则开启
+        if (it == 0) {
+            animationEnable = false
+        } else {
+            animationEnable = true
+            setAnimationWithDefault(BaseQuickAdapter.AnimationType.values()[it - 1])
+        }
     }
 }

@@ -3,10 +3,13 @@ package com.theone.dynamicwallpaper.ui.fragment
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.theone.common.ext.dp2px
+import com.theone.dynamicwallpaper.app.ext.setAdapterAnimation
 import com.theone.dynamicwallpaper.app.ext.startWallPaper
 import com.theone.dynamicwallpaper.app.util.WallpaperUtil
 import com.theone.dynamicwallpaper.data.bean.Wallpaper
 import com.theone.dynamicwallpaper.app.util.WallpaperManager
+import com.theone.dynamicwallpaper.app.widge.SpaceItemDecoration
 import com.theone.dynamicwallpaper.ui.adapter.WallpaperAdapter
 import com.theone.dynamicwallpaper.viewmodel.WallpaperViewModel
 import com.theone.mvvm.core.base.fragment.BasePagerPullRefreshFragment
@@ -30,6 +33,26 @@ class WallpaperFragment :
     override fun getRefreshLayout(): PullRefreshLayout = mBinding.refreshLayout
 
     override fun isLazyLoadData(): Boolean = false
+
+    override fun initAdapter() {
+        super.initAdapter()
+        mAdapter.setAdapterAnimation()
+    }
+
+    override fun getItemDecoration(): RecyclerView.ItemDecoration {
+        val space = dp2px(getItemSpace())
+        return SpaceItemDecoration(
+            getSpanCount(),
+            mAdapter.headerLayoutCount,
+            space,space,space,0
+        )
+    }
+
+    override fun onRefreshSuccess(data: List<Wallpaper>) {
+        mAdapter.setDiffNewData(data.toMutableList())
+        setRefreshLayoutEnabled(true)
+        getRecyclerView().scrollToPosition(0)
+    }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val data = adapter.getItem(position) as Wallpaper
