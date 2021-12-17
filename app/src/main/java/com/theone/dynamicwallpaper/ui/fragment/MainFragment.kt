@@ -23,6 +23,9 @@ class MainFragment : BaseTabInTitleFragment<BaseViewModel>() {
 
     override fun initTopBar() {
         getTopBar()?.run {
+            addLeftImageButton(R.drawable.svg_restrict,R.id.topbar_left_button).setOnClickListener {
+
+            }
             addRightImageButton(
                 R.drawable.mz_titlebar_ic_setting_dark,
                 R.id.topbar_right_view

@@ -79,7 +79,7 @@ class ShortVideoParseActivity :
                 R.id.topbar_right_view
             ).apply {
                 setOnClickListener {
-                    mViewModel.getVideoLiveData().value?.let {
+                    mViewModel.getResponseLiveData().value?.let {
                         showVideoActionDialog(it)
                     }
                 }
@@ -130,7 +130,7 @@ class ShortVideoParseActivity :
 
     override fun createObserver() {
         addLoadingObserve(mViewModel)
-        mViewModel.getVideoLiveData().observeInActivity(this) {
+        mViewModel.getResponseLiveData().observeInActivity(this) {
             mBinding.videoPlayer.run {
                 setVideoData(it, it.name)
                 startPlayLogic()

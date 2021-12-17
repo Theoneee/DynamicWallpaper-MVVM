@@ -23,7 +23,7 @@ public class ShortVideoPlayer extends StandardGSYVideoPlayer {
 
     private ImageView mCover;
     private TextView mTvSpeed;
-    private String[] mSpeedItems = new String[]{"0.5X", "正常", "1.5X", "2.0X", "2.5X", "3.0X"};
+    private String[] mSpeedItems = new String[]{"0.5X", "正常", "1.5X", "2.0X"};
 
     public ShortVideoPlayer(Context context) {
         super(context);
@@ -66,7 +66,7 @@ public class ShortVideoPlayer extends StandardGSYVideoPlayer {
         QMUIBottomSheet.BottomListSheetBuilder builder = new QMUIBottomSheet.BottomListSheetBuilder(getContext());
         builder.setGravityCenter(true)
                 .setSkinManager(QMUISkinManager.defaultInstance(getContext()))
-                .setTitle("倍数")
+                .setTitle("播放速度")
                 .setAddCancelBtn(false)
                 .setAllowDrag(true)
                 .setNeedRightMark(true)
@@ -74,8 +74,7 @@ public class ShortVideoPlayer extends StandardGSYVideoPlayer {
                     @Override
                     public void onClick(QMUIBottomSheet dialog, View itemView, int position, String tag) {
                         dialog.dismiss();
-                        setSpeed((position + 1) * 0.5f);
-                        mTvSpeed.setText(mSpeedItems[position]);
+                        setVideoSpeed(position);
                     }
                 });
         for (int i = 0; i < mSpeedItems.length; i++) {
@@ -88,10 +87,16 @@ public class ShortVideoPlayer extends StandardGSYVideoPlayer {
         builder.build().show();
     }
 
+    private void setVideoSpeed(int position){
+        setSpeed((position + 1) * 0.5f);
+        mTvSpeed.setText(mSpeedItems[position]);
+    }
+
     public void setVideoData(IImageUrl file, String title) {
         loadCoverImage(file);
+        setVideoSpeed(1);
         mPlayTag = file.getImageUrl();
-        setUpLazy(file.getImageUrl(), true, new File(FileDirectoryManager.INSTANCE.getVideoPath()), null, title);
+        setUpLazy(file.getImageUrl(), false, new File(FileDirectoryManager.INSTANCE.getVideoPath()), null, title);
     }
 
     private void loadCoverImage(IImageUrl file) {

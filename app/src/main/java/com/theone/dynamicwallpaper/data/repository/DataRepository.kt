@@ -13,6 +13,7 @@ object DataRepository {
             val list = mutableListOf<Wallpaper>()
             val columns = arrayOf(
                 MediaStore.MediaColumns.DATA,
+                MediaStore.MediaColumns.TITLE,
                 MediaStore.MediaColumns.MIME_TYPE,
                 MediaStore.Video.VideoColumns.DURATION,
                 MediaStore.Video.Thumbnails.DATA,
@@ -38,9 +39,11 @@ object DataRepository {
                                 cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA))
                             val thumbPath =
                                 cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Thumbnails.DATA))
+                            val title =
+                                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.TITLE))
                             val addDate =
                                 cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATE_ADDED))
-                            list.add(Wallpaper(path, thumbPath, size, addDate.toLong(), ""))
+                            list.add(Wallpaper(path, thumbPath, size, addDate.toLong(), title))
                         }
                     } while (cursor.moveToNext())
                 }

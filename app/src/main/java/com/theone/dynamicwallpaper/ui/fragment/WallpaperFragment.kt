@@ -18,13 +18,13 @@ import com.theone.mvvm.core.databinding.BasePullFreshFragmentBinding
 import com.theone.mvvm.core.widge.pullrefresh.PullRefreshLayout
 
 class WallpaperFragment :
-    BasePagerPullRefreshFragment<Wallpaper, WallpaperViewModel, BasePullFreshFragmentBinding>() {
+        BasePagerPullRefreshFragment<Wallpaper, WallpaperViewModel, BasePullFreshFragmentBinding>() {
 
     override fun getLayoutManagerType(): LayoutManagerType = LayoutManagerType.GRID
 
     override fun getSpanCount(): Int = 3
 
-    override fun getItemSpace(): Int = 10
+    override fun getItemSpace(): Int = 5
 
     override fun createAdapter(): BaseQuickAdapter<Wallpaper, *> = WallpaperAdapter()
 
@@ -39,19 +39,21 @@ class WallpaperFragment :
         mAdapter.setAdapterAnimation()
     }
 
-    override fun getItemDecoration(): RecyclerView.ItemDecoration {
+    override fun initRecyclerView() {
+        super.initRecyclerView()
         val space = dp2px(getItemSpace())
-        return SpaceItemDecoration(
-            getSpanCount(),
-            mAdapter.headerLayoutCount,
-            space,space,space,0
-        )
+        getRecyclerView().setPadding(space, space, space, space)
+    }
+
+    override fun getItemDecoration(): RecyclerView.ItemDecoration {
+        return SpaceItemDecoration(dp2px(getItemSpace()))
     }
 
     override fun onRefreshSuccess(data: List<Wallpaper>) {
-        mAdapter.setDiffNewData(data.toMutableList())
         setRefreshLayoutEnabled(true)
-        getRecyclerView().scrollToPosition(0)
+        mAdapter.getDiffer().submitList(data.toMutableList()) {
+            getRecyclerView().scrollToPosition(0)
+        }
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {

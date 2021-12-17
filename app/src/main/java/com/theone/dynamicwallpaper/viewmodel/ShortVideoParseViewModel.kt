@@ -32,26 +32,19 @@ import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
  * @email 625805189@qq.com
  * @remark
  */
-class ShortVideoParseViewModel : BaseRequestViewModel<String>() {
+class ShortVideoParseViewModel : BaseRequestViewModel<Wallpaper>() {
 
     /**
      * 分享的链接
      */
     val shareLink: StringObservableField = StringObservableField()
 
-    /**
-     * 解析后的视频文件
-     */
-    private val video: UnPeekLiveData<Wallpaper> = UnPeekLiveData()
-
-    fun getVideoLiveData():ProtectedUnPeekLiveData<Wallpaper> = video
-
     override fun requestServer() {
         // 拿到分享链接里的网址
         val url = shareLink.get().getUrl()
         if(url.isEmpty()) return
         request({
-            video.value = ShortVideoParseRepository().parseVideo(url)
+            onSuccess(ShortVideoParseRepository().parseVideo(url))
         }, "解析中")
     }
 

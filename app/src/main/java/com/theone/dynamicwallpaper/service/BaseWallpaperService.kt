@@ -2,7 +2,9 @@ package com.theone.dynamicwallpaper.service
 
 import android.media.MediaPlayer
 import android.service.wallpaper.WallpaperService
+import android.util.Log
 import android.view.SurfaceHolder
+import androidx.lifecycle.Observer
 import com.theone.dynamicwallpaper.app.util.WallpaperManager
 import com.theone.dynamicwallpaper.app.util.WallpaperUtil
 
@@ -15,23 +17,34 @@ import com.theone.dynamicwallpaper.app.util.WallpaperUtil
  */
 abstract class BaseWallpaperService : WallpaperService() {
 
-    inner class VideoEngine : Engine() {
+    inner class WallpaperEngine : Engine() {
         private var mMediaPlayer: MediaPlayer? = null
         private var mVideoPath: String? = null
 
-        override fun onCreate(surfaceHolder: SurfaceHolder?) {
-            super.onCreate(surfaceHolder)
-            WallpaperManager.getInstance().getVideoPathLiveData().observeForever {
-                mVideoPath = it
-            }
-            WallpaperManager.getInstance().getVideoVolumeLiveData().observeForever {
-                setVideoVolume(it)
-            }
+        private val mPathObserve: Observer<String> = Observer {
+            mVideoPath = it
+        }
+
+        private val mVolumeObserve: Observer<Boolean> = Observer {
+            setVideoVolume(it)
         }
 
         private fun setVideoVolume(isOpen: Boolean) {
             val volume = if (isOpen) 1.0f else 0f
             mMediaPlayer?.setVolume(volume, volume)
+        }
+
+        override fun onCreate(surfaceHolder: SurfaceHolder?) {
+            super.onCreate(surfaceHolder)
+            WallpaperManager.getInstance().getVideoPathLiveData().observeForever(mPathObserve)
+            WallpaperManager.getInstance().getVideoVolumeLiveData().observeForever(mVolumeObserve)
+        }
+
+        override fun onDestroy() {
+            super.onDestroy()
+            // 为什么这里我移除了，更改声音的时候还是能收到呢....
+            WallpaperManager.getInstance().getVideoPathLiveData().removeObserver(mPathObserve)
+            WallpaperManager.getInstance().getVideoVolumeLiveData().removeObserver(mVolumeObserve)
         }
 
         override fun onSurfaceCreated(holder: SurfaceHolder?) {

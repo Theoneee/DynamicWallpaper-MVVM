@@ -25,5 +25,5 @@ package com.theone.dynamicwallpaper.service
  * @remark
  */
 class WallpaperService1:BaseWallpaperService() {
-    override fun onCreateEngine(): Engine = VideoEngine()
+    override fun onCreateEngine(): Engine = WallpaperEngine()
 }

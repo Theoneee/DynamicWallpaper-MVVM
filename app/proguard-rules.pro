@@ -25,3 +25,6 @@
 -keep class com.theone.dynamicwallpaper.databinding.**{*;}
 
 -keep class com.theone.dynamicwallpaper.** { *; }
+
+-keep class tv.danmaku.ijk.** { *; }
+-dontwarn tv.danmaku.ijk.**
