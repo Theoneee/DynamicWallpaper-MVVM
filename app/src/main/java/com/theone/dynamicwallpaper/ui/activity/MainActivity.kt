@@ -1,13 +1,16 @@
 package com.theone.dynamicwallpaper.ui.activity
 
 import android.annotation.SuppressLint
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
+import android.os.Bundle
 import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.qmuiteam.qmui.arch.annotation.DefaultFirstFragment
 import com.theone.common.constant.BundleConstant
+import com.theone.common.ext.logE
 import com.theone.dynamicwallpaper.app.ext.getClipDataAndCheck
 import com.theone.dynamicwallpaper.app.ext.goHome
 import com.theone.dynamicwallpaper.app.util.WallpaperManager
@@ -27,7 +30,9 @@ class MainActivity : BaseFragmentActivity() {
         }
     }
 
-    private var mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+    var registerForActivityResult: ActivityResultLauncher<Intent>?=null
+
+    private var mReceiver = object : BroadcastReceiver() {
         @SuppressLint("SetTextI18n")
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
@@ -39,13 +44,17 @@ class MainActivity : BaseFragmentActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == WallpaperConstant.REQUEST_LIVE_PAPER){
-            if(WallpaperUtil.isLiveWallpaperChanged()){
-                if(WallpaperUtil.isSuccessGoHome()){
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        registerForActivityResult = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            // 在设置壁纸界面，无论返回还是设置成功后都会回调此方法
+            // 所以要判断当前运行的壁纸服务是否为当前设置的
+            if (WallpaperUtil.isLiveWallpaperChanged()) {
+                if (WallpaperUtil.isSuccessGoHome()) {
                     goHome()
-                }else{
+                } else {
                     showSuccessTipsDialog("更换壁纸成功")
                 }
             }

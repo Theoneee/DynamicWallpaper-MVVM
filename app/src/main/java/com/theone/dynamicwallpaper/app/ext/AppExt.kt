@@ -5,10 +5,16 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.activity.ComponentActivity
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.theone.dynamicwallpaper.app.util.WallpaperUtil
 import com.theone.dynamicwallpaper.data.constatnt.WallpaperConstant
+import com.theone.dynamicwallpaper.ui.activity.MainActivity
 import com.theone.mvvm.ext.qmui.showFailTipsDialog
+import com.theone.mvvm.ext.qmui.showSuccessTipsDialog
 import java.util.*
 
 
@@ -29,14 +35,15 @@ fun Long.formatTime(): String {
 
 }
 
-fun startWallPaper(activity: Activity, clazz: Class<*>){
+fun Activity.getWallpaperIntent(clazz: Class<*>):Intent = Intent(android.app.WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER).apply {
+    putExtra(android.app.WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
+        ComponentName(this@getWallpaperIntent,clazz)
+    )
+}
+
+fun MainActivity.startWallPaper(clazz: Class<*>){
     WallpaperUtil.setCurrentWallpaperService(clazz)
-    val intent = Intent(android.app.WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER).apply {
-        putExtra(android.app.WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
-            ComponentName(activity,clazz)
-        )
-    }
-    activity.startActivityForResult(intent, WallpaperConstant.REQUEST_LIVE_PAPER)
+    registerForActivityResult?.launch(getWallpaperIntent(clazz))
 }
 
 fun Context.goHome() {

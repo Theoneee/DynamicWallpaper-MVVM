@@ -1,5 +1,6 @@
 package com.theone.dynamicwallpaper.ui.fragment
 
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -10,15 +11,17 @@ import com.theone.dynamicwallpaper.app.util.WallpaperUtil
 import com.theone.dynamicwallpaper.data.bean.Wallpaper
 import com.theone.dynamicwallpaper.app.util.WallpaperManager
 import com.theone.dynamicwallpaper.app.widge.SpaceItemDecoration
+import com.theone.dynamicwallpaper.ui.activity.MainActivity
 import com.theone.dynamicwallpaper.ui.adapter.WallpaperAdapter
 import com.theone.dynamicwallpaper.viewmodel.WallpaperViewModel
 import com.theone.mvvm.core.base.fragment.BasePagerPullRefreshFragment
 import com.theone.mvvm.core.data.enum.LayoutManagerType
 import com.theone.mvvm.core.databinding.BasePullFreshFragmentBinding
+import com.theone.mvvm.core.util.imagepreview.ImageLoader
 import com.theone.mvvm.core.widge.pullrefresh.PullRefreshLayout
 
 class WallpaperFragment :
-        BasePagerPullRefreshFragment<Wallpaper, WallpaperViewModel, BasePullFreshFragmentBinding>() {
+    BasePagerPullRefreshFragment<Wallpaper, WallpaperViewModel, BasePullFreshFragmentBinding>() {
 
     override fun getLayoutManagerType(): LayoutManagerType = LayoutManagerType.GRID
 
@@ -59,7 +62,7 @@ class WallpaperFragment :
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val data = adapter.getItem(position) as Wallpaper
         WallpaperManager.getInstance().setVideoPath(data.path)
-        startWallPaper(requireActivity(), WallpaperUtil.getNextWallpaperService())
+        (activity as MainActivity?)?.startWallPaper(WallpaperUtil.getNextWallpaperService())
     }
 
     override fun createObserver() {

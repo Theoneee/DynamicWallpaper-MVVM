@@ -1,7 +1,5 @@
 package com.theone.dynamicwallpaper.viewmodel
 
-import com.kunminx.architecture.ui.callback.ProtectedUnPeekLiveData
-import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import com.theone.dynamicwallpaper.app.ext.getUrl
 import com.theone.dynamicwallpaper.data.bean.Wallpaper
 import com.theone.dynamicwallpaper.data.repository.ShortVideoParseRepository
