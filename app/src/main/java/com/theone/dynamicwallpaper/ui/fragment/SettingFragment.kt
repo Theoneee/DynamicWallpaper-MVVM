@@ -49,7 +49,7 @@ class SettingFragment : BaseCoreFragment<BaseViewModel, FragmentGroupListViewBin
 
     override fun initView(root: View) {
         setTitleWitchBackBtn("设置")
-        mBinding.groupListView.run {
+        getDataBinding().groupListView.run {
             mVolume = createSwitchItem(
                 "视频声音",
                 drawable = R.drawable.svg_volume,

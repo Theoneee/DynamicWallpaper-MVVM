@@ -1,9 +1,9 @@
 package com.theone.dynamicwallpaper.viewmodel
 
+import com.theone.common.callback.databind.StringObservableField
 import com.theone.dynamicwallpaper.app.ext.getUrl
 import com.theone.dynamicwallpaper.data.bean.Wallpaper
 import com.theone.dynamicwallpaper.data.repository.ShortVideoParseRepository
-import com.theone.mvvm.callback.databind.StringObservableField
 import com.theone.mvvm.core.base.viewmodel.BaseRequestViewModel
 
 //  ┏┓　　　┏┓

@@ -5,16 +5,10 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.activity.ComponentActivity
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.theone.dynamicwallpaper.app.util.WallpaperUtil
-import com.theone.dynamicwallpaper.data.constatnt.WallpaperConstant
 import com.theone.dynamicwallpaper.ui.activity.MainActivity
 import com.theone.mvvm.ext.qmui.showFailTipsDialog
-import com.theone.mvvm.ext.qmui.showSuccessTipsDialog
 import java.util.*
 
 

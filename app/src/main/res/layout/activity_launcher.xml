@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.theone.dynamicwallpaper.viewmodel.LauncherViewModel" />
     </data>
 
     <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout2
@@ -11,10 +13,11 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <com.theone.mvvm.core.widge.pullrefresh.WWLoadingView
+        <com.theone.mvvm.core.app.widge.pullrefresh.WWLoadingView
             android:id="@+id/loading_view"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            app:animation="@{vm.animation}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -14,11 +14,11 @@ import com.theone.dynamicwallpaper.app.ext.getClipDataAndCheck
 import com.theone.dynamicwallpaper.data.bean.Wallpaper
 import com.theone.dynamicwallpaper.databinding.ActivityShortVideoParseBinding
 import com.theone.dynamicwallpaper.viewmodel.ShortVideoParseViewModel
+import com.theone.mvvm.core.app.ext.qmui.OnGridBottomSheetItemClickListener
+import com.theone.mvvm.core.app.ext.qmui.showGridBottomSheet
+import com.theone.mvvm.core.app.util.DownloadUtil
 import com.theone.mvvm.core.base.activity.BaseCoreActivity
-import com.theone.mvvm.core.data.entity.QMUIItem
-import com.theone.mvvm.core.ext.qmui.OnGridBottomSheetItemClickListener
-import com.theone.mvvm.core.ext.qmui.showGridBottomSheet
-import com.theone.mvvm.core.util.DownloadUtil
+import com.theone.mvvm.core.data.entity.QMUIItemBean
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -56,9 +56,9 @@ class ShortVideoParseActivity :
         val TAG_PUBLISH = "发布"
     }
 
-    private val mActions = mutableListOf<QMUIItem>(
-        QMUIItem(TAG_SAVE, R.drawable.svg_operation_save),
-        QMUIItem(TAG_LINK, R.drawable.svg_lover_link),
+    private val mActions = mutableListOf<QMUIItemBean>(
+        QMUIItemBean(TAG_SAVE, R.drawable.svg_operation_save),
+        QMUIItemBean(TAG_LINK, R.drawable.svg_lover_link),
     )
 
     override fun translucentFull(): Boolean = true
@@ -79,7 +79,7 @@ class ShortVideoParseActivity :
                 R.id.topbar_right_view
             ).apply {
                 setOnClickListener {
-                    mViewModel.getResponseLiveData().value?.let {
+                    getViewModel().getResponseLiveData().value?.let {
                         showVideoActionDialog(it)
                     }
                 }
@@ -87,7 +87,7 @@ class ShortVideoParseActivity :
             }
         }
 
-        mBinding.videoPlayer.run {
+        getDataBinding().videoPlayer.run {
             orientationUtils = OrientationUtils(this@ShortVideoParseActivity, this)
             fullscreenButton.setOnClickListener {
                 orientationUtils?.resolveByClick()
@@ -110,18 +110,18 @@ class ShortVideoParseActivity :
     }
 
     private fun startParse(url: String) {
-        mViewModel.shareLink.set(url)
-        mViewModel.requestServer()
+        getViewModel().shareLink.set(url)
+        getViewModel().requestServer()
     }
 
     private fun checkClipData(link: String? = null) {
         link?.let {
-            if(it == mViewModel.shareLink.get()){
+            if(it == getViewModel().shareLink.get()){
                 return
             }
         }
         getClipDataAndCheck(link, {
-            mBinding.videoPlayer.release()
+            getDataBinding().videoPlayer.release()
             mActionBtn?.invisible()
         }, {
             startParse(it)
@@ -129,9 +129,9 @@ class ShortVideoParseActivity :
     }
 
     override fun createObserver() {
-        addLoadingObserve(mViewModel)
-        mViewModel.getResponseLiveData().observeInActivity(this) {
-            mBinding.videoPlayer.run {
+        addLoadingObserve(getViewModel())
+        getViewModel().getResponseLiveData().observe(this) {
+            getDataBinding().videoPlayer.run {
                 setVideoData(it, it.name)
                 startPlayLogic()
                 visible()
@@ -143,14 +143,14 @@ class ShortVideoParseActivity :
     private fun showVideoActionDialog(file: Wallpaper) {
         showGridBottomSheet(
             mActions,
-            listener = object : OnGridBottomSheetItemClickListener {
+            listener = object : OnGridBottomSheetItemClickListener<QMUIItemBean> {
                 override fun onGridBottomSheetItemClick(
                     dialog: QMUIBottomSheet,
                     itemView: View,
-                    tag: String
+                    tag: QMUIItemBean
                 ) {
                     dialog.dismiss()
-                    when (tag) {
+                    when (tag.getItemTitle()) {
                         TAG_SAVE -> DownloadUtil.startDownload(
                             this@ShortVideoParseActivity,
                             file
@@ -168,17 +168,17 @@ class ShortVideoParseActivity :
 
     override fun onResume() {
         super.onResume()
-        mBinding.videoPlayer.onVideoResume()
+        getDataBinding().videoPlayer.onVideoResume()
         checkClipData()
     }
 
     override fun onPause() {
         super.onPause()
-        mBinding.videoPlayer.onVideoPause()
+        getDataBinding().videoPlayer.onVideoPause()
     }
 
     override fun onDestroy() {
-        mBinding.videoPlayer.release()
+        getDataBinding().videoPlayer.release()
         orientationUtils?.releaseListener()
         super.onDestroy()
     }
@@ -186,11 +186,11 @@ class ShortVideoParseActivity :
     override fun doOnBackPressed() {
         //先返回正常状态
         if (orientationUtils?.screenType == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            mBinding.videoPlayer.fullscreenButton.performClick()
+            getDataBinding().videoPlayer.fullscreenButton.performClick()
             return
         }
         //释放所有
-        mBinding.videoPlayer.setVideoAllCallBack(null)
+        getDataBinding().videoPlayer.setVideoAllCallBack(null)
         super.doOnBackPressed()
     }
 

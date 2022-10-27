@@ -1,6 +1,7 @@
 package com.theone.dynamicwallpaper.data.bean
 
 import com.luck.picture.lib.config.PictureConfig
+import com.luck.picture.lib.config.SelectMimeType.TYPE_VIDEO
 import com.theone.common.callback.IImageUrl
 import com.theone.dynamicwallpaper.app.ext.formatTime
 
@@ -10,7 +11,7 @@ data class Wallpaper(
     var size: Long = 0,
     var addDate: Long = 0,
     var name: String = "",
-    var type: Int = PictureConfig.TYPE_VIDEO
+    var type: Int = TYPE_VIDEO
 ) : IImageUrl {
 
     fun getDuration(): String = size.formatTime()
@@ -25,6 +26,6 @@ data class Wallpaper(
 
     override fun getWidth(): Int = 0
 
-    override fun isVideo(): Boolean = type == PictureConfig.TYPE_VIDEO
+    override fun isVideo(): Boolean = type == TYPE_VIDEO
 
 }

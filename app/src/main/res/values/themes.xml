@@ -2,10 +2,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="CoreTheme">
         <item name="qmui_topbar_height">60dp</item>
-        <item name="qmui_dialog_radius">7dp</item>
         <item name="qmui_skin_support_topbar_separator_height">0px</item>
-        <item name="qmui_dialog_title_style">@style/DialogTheme2TitleStyle</item>
-        <item name="qmui_dialog_action_style">@style/DialogTheme2ActionStyle</item>
+
+        <item name="app_skin_main_background_color">@color/qmui_config_color_background</item>
+<!--        <item name="qmui_dialog_title_style">@style/DialogTheme2TitleStyle</item>-->
+<!--        <item name="qmui_dialog_action_style">@style/DialogTheme2ActionStyle</item>-->
     </style>
 
     <style name="ShareTheme" parent="AppTheme">

@@ -1,7 +1,7 @@
-package com.theone.dynamicwallpaper.data.bean
+package com.theone.dynamicwallpaper.viewmodel
 
-import com.theone.mvvm.core.base.request.IPageInfo
-
+import com.theone.common.callback.databind.BooleanObservableField
+import com.theone.mvvm.base.viewmodel.BaseViewModel
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -22,18 +22,13 @@ import com.theone.mvvm.core.base.request.IPageInfo
 //      ┗┻┛　┗┻┛
 /**
  * @author The one
- * @date 2021-12-17 15:07
+ * @date 2022-02-16 15:06
  * @describe TODO
  * @email 625805189@qq.com
  * @remark
  */
-class PageInfo: IPageInfo {
+class LauncherViewModel:BaseViewModel() {
 
-    override fun getPage(): Int = 1
+    val animation = BooleanObservableField()
 
-    override fun getPageSize(): Int  =1
-
-    override fun getPageTotalCount(): Int = 1
-
-    override fun getTotalCount(): Int = 1
 }

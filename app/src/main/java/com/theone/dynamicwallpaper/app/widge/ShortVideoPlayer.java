@@ -15,7 +15,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.theone.common.callback.IImageUrl;
 import com.theone.dynamicwallpaper.R;
-import com.theone.mvvm.core.util.FileDirectoryManager;
+import com.theone.mvvm.core.app.util.FileDirectoryManager;
 
 import java.io.File;
 

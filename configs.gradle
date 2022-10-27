@@ -1,0 +1,8 @@
+ext {
+
+    // rxHttp
+    rxhttpVersion = '3.0.0-rc1'
+
+
+
+}

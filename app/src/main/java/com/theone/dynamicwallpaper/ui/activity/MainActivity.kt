@@ -3,25 +3,23 @@ package com.theone.dynamicwallpaper.ui.activity
 import android.annotation.SuppressLint
 import android.content.*
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.ComponentActivity
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.qmuiteam.qmui.arch.annotation.DefaultFirstFragment
 import com.theone.common.constant.BundleConstant
-import com.theone.common.ext.logE
 import com.theone.dynamicwallpaper.app.ext.getClipDataAndCheck
 import com.theone.dynamicwallpaper.app.ext.goHome
 import com.theone.dynamicwallpaper.app.util.WallpaperManager
 import com.theone.dynamicwallpaper.app.util.WallpaperUtil
-import com.theone.dynamicwallpaper.data.constatnt.WallpaperConstant
 import com.theone.dynamicwallpaper.ui.fragment.MainFragment
+import com.theone.dynamicwallpaper.ui.fragment.WallpaperFragment
 import com.theone.mvvm.base.activity.BaseFragmentActivity
 import com.theone.mvvm.core.service.DownloadService
 import com.theone.mvvm.ext.qmui.showSuccessTipsDialog
 
-@DefaultFirstFragment(MainFragment::class)
+// 调用不同的试试
+//@DefaultFirstFragment(MainFragment::class)
+@DefaultFirstFragment(WallpaperFragment::class)
 class MainActivity : BaseFragmentActivity() {
 
     private val mFilter: IntentFilter by lazy {
