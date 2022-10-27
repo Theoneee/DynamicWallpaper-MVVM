@@ -4,11 +4,14 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.view.View
 import com.hjq.toast.ToastUtils
+import com.luck.picture.lib.config.SelectMimeType
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
+import com.theone.common.callback.IImageUrl
 import com.theone.common.constant.BundleConstant
 import com.theone.common.ext.*
+import com.theone.common.util.FileUtils
 import com.theone.dynamicwallpaper.R
 import com.theone.dynamicwallpaper.app.ext.getClipDataAndCheck
 import com.theone.dynamicwallpaper.data.bean.Wallpaper
@@ -17,8 +20,12 @@ import com.theone.dynamicwallpaper.viewmodel.ShortVideoParseViewModel
 import com.theone.mvvm.core.app.ext.qmui.OnGridBottomSheetItemClickListener
 import com.theone.mvvm.core.app.ext.qmui.showGridBottomSheet
 import com.theone.mvvm.core.app.util.DownloadUtil
+import com.theone.mvvm.core.app.util.FileDirectoryManager
 import com.theone.mvvm.core.base.activity.BaseCoreActivity
+import com.theone.mvvm.core.data.entity.DownloadBean
 import com.theone.mvvm.core.data.entity.QMUIItemBean
+import com.theone.mvvm.core.service.startDownloadService
+import java.io.File
 
 //  ┏┓　　　┏┓
 //┏┛┻━━━┛┻┓
@@ -147,14 +154,11 @@ class ShortVideoParseActivity :
                 override fun onGridBottomSheetItemClick(
                     dialog: QMUIBottomSheet,
                     itemView: View,
-                    tag: QMUIItemBean
+                    item: QMUIItemBean
                 ) {
                     dialog.dismiss()
-                    when (tag.getItemTitle()) {
-                        TAG_SAVE -> DownloadUtil.startDownload(
-                            this@ShortVideoParseActivity,
-                            file
-                        )
+                    when (item.getItemTitle()) {
+                        TAG_SAVE -> startDownload(file)
                         TAG_LINK -> {
                             file.path.setPrimaryClip(this@ShortVideoParseActivity)
                             ToastUtils.show("链接已复制到剪切板")
@@ -164,6 +168,29 @@ class ShortVideoParseActivity :
                     }
                 }
             }).show()
+    }
+
+    private fun startDownload(file:Wallpaper){
+        val mineType = when (file.resType()) {
+            IImageUrl.Type.VIDEO -> SelectMimeType.SYSTEM_VIDEO
+            IImageUrl.Type.IMAGE -> SelectMimeType.SYSTEM_IMAGE
+            else -> SelectMimeType.SYSTEM_AUDIO
+        }
+
+        val fileName = DownloadUtil.getDownloadFileName(
+            file.getImageUrl(),
+            file.resType() == IImageUrl.Type.VIDEO
+        )
+
+        val path = FileUtils.createExternalFileDir(this,getString(R.string.app_name)+ File.separator+"download").path
+
+        val download = DownloadBean(
+            file.getImageUrl(),
+            path,
+            fileName
+        )
+        ToastUtils.show("开始下载")
+        startDownloadService(download)
     }
 
     override fun onResume() {
